@@ -2,7 +2,7 @@
 
 node's [dgram](https://nodejs.org/api/dgram.html) API in React Native
 
-This module is used by [Tradle](https://github.com/tradle)
+This module is created to fix issue on android
 
 ## Compatibility
 

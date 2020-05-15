@@ -65,10 +65,12 @@ public final class UdpSockets extends ReactContextBaseJavaModule
                 @Override
                 protected void doInBackgroundGuarded(Void... params) {
                     for (int i = 0; i < mClients.size(); i++) {
-                        try {
-                            mClients.valueAt(i).close();
-                        } catch (IOException e) {
-                            FLog.e(TAG, "exception when shutting down", e);
+                        if(mClients.valueAt(i) != null) {
+                            try {
+                                mClients.valueAt(i).close();
+                            } catch (Exception e) {
+                                FLog.e(TAG, "exception when shutting down", e);
+                            }
                         }
                     }
                     mClients.clear();
@@ -265,6 +267,9 @@ public final class UdpSockets extends ReactContextBaseJavaModule
             protected void doInBackgroundGuarded(Void... params) {
                 UdpSocketClient client = findClient(cId, callback);
                 if (client == null) {
+                    if(mClients.indexOfKey(cId) >= 0) {
+                        mClients.remove(cId);
+                    }
                     return;
                 }
 
